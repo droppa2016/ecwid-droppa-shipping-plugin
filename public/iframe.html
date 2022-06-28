@@ -515,7 +515,10 @@
                             updatedKeys.innerHTML = data.updatedKeys;
                         }
                     })
-                    .catch(error => console.log(error.message));
+                    .catch(error => {
+                        console.log(error.message) 
+                        console.log(error);
+                    });
             }
         });
 

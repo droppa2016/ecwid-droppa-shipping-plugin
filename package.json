@@ -16,7 +16,7 @@
     "Ecwid-API",
     "Droppa Ecwid App"
   ],
-  "author": "Jack Manamela",
+  "author": "Droppa",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.23.0",
