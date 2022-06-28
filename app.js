@@ -435,7 +435,8 @@ app.post('/save_user_keys', async (req, res) => {
     }
 
     const saveEcwidSettings = new EcwidSettings(newUserModel);
-
+    console.log("setting for ecwid......", saveEcwidSettings);
+    
     await EcwidSettings.findOne({ store_Id: `${newUserModel.store_Id}` },
         async (error, foundStoreName) => {
 
