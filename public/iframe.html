@@ -385,14 +385,14 @@
             autoloadedflag: true,
             autoheight: true
         });
-
+        console.log("app loaded......");
         let storeData = EcwidApp.getPayload();
         let storeId = storeData.store_id;
         let accessToken = storeData.access_token;
         let publicToken = storeData.public_token;
         let language = storeData.lang;
         let viewMode = storeData.view_mode;
-        const EcwidSettings = require('./model/EcwidSettings');
+        // const EcwidSettings = require('./model/EcwidSettings');
 
         const initialConfig = {
             private: {
@@ -429,7 +429,7 @@
         });
 
         EcwidApp.getAppStorage('installed', (value) => {
-            // console.log(`Installed Application: `, value);
+            console.log(`Installed Application: `, value);
         });
 
         let store_Id = document.getElementById('storeId');
@@ -458,7 +458,7 @@
             return response.json();
         }
 
-        document.getElementById('saveEcwidKeys').addEventListener('click', (e) => {
+        /*document.getElementById('saveEcwidKeys').addEventListener('click', (e) => {
             e.preventDefault();
 
             let { api_key,
@@ -585,7 +585,7 @@
                         console.log(error);
                     });
             }
-        });
+        });*/
 
     </script>
 </body>

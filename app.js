@@ -64,7 +64,7 @@ if (NODE_ENV === 'development') {
 /**
  * @description     - Access Public Directory To View The iframe Html File
  */
-app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "public", "https://www.droppergroup.co.za/droppa/developers-sign-up")));
+app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "public", "iframe.html")));
 
 /**
  * @description     - Send Post Request To GET Ecwid Shipping Response
@@ -433,9 +433,9 @@ app.post('/save_user_keys', async (req, res) => {
         public_key,
         private_key
     }
-    console.log("setting for ecwid......", saveEcwidSettings);
 
     const saveEcwidSettings = new EcwidSettings(newUserModel);
+
     await EcwidSettings.findOne({ store_Id: `${newUserModel.store_Id}` },
         async (error, foundStoreName) => {
 
