@@ -509,6 +509,17 @@
                 EcwidApp.setAppStorage(bodyData, function () {
                     console.log('Data saved!');
                 });
+
+                EcwidApp.getAppStorage('public', function (value) {
+                    //prints '1234' 
+                    console.log(value);
+                });
+
+                EcwidApp.getAppStorage(function (allKeys) {
+                    // prints an array of key : value objects from app storage
+                    console.log(allKeys);
+                });
+
                 postData("/save_user_keys", { bodyData })
                     .then(data => {
                         if (data.status === 200) {
