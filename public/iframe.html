@@ -506,7 +506,9 @@
             } else {
 
                 errorResultsStoreName.innerHTML = "";
-
+                EcwidApp.setAppStorage(bodyData, function () {
+                    console.log('Data saved!');
+                });
                 postData("/save_user_keys", { bodyData })
                     .then(data => {
                         if (data.status === 200) {
@@ -516,7 +518,7 @@
                         }
                     })
                     .catch(error => {
-                        console.log(error.message) 
+                        console.log(error.message)
                         console.log(error);
                     });
             }
