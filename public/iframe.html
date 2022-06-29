@@ -518,6 +518,57 @@
                 EcwidApp.getAppStorage(function (allKeys) {
                     // prints an array of key : value objects from app storage
                     console.log(allKeys);
+                    const saveEcwidSettings = new EcwidSettings(bodyData);
+
+                    EcwidSettings.findOne({ store_Id: `${bodyData.store_Id}` },
+                        async (error, foundStoreName) => {
+
+                            if (error) console.log({ error });
+
+                            if (foundStoreName === null) {
+                                return await saveEcwidSettings.save((error, savedResults) => {
+                                    if (error) console.log({ error });
+
+                                    fs.writeFile("./application_saved_keys.json", bodyData, function (err, data) {
+                                        if (err) {
+                                            return console.log(err);
+                                        }
+                                        console.log(data);
+                                    });
+
+                                    if (savedResults) {
+                                        res.json({
+                                            updatedKeys: 'Your keys were successfully saved.',
+                                            dataResponse: savedResults,
+                                            status: 200
+                                        });
+                                    }
+                                });
+                            } else {
+                                return await EcwidSettings.findOneAndUpdate(
+                                    { store_Id: newUserModel.api_key },
+                                    newUserModel,
+                                    { upsert: true, new: true },
+                                    async (error, results) => {
+                                        if (error) console.log({ error });
+
+                                        const storeInformation = await EcwidSettings.findOne({}).where('store_Id').equals(results.store_Id).exec();
+
+                                        fs.writeFile("./application_saved_keys.json", bodyData, function (err, data) {
+                                            if (err) {
+                                                return console.log(err);
+                                            }
+                                            console.log(data);
+                                        });
+
+                                        res.json({
+                                            updatedKeys: 'Your keys were successfully updated.',
+                                            dataResponse: storeInformation,
+                                            status: 200
+                                        });
+                                    });
+                            }
+                        });
                 });
 
                 postData("/save_user_keys", { bodyData })
