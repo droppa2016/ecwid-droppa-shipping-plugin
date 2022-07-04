@@ -447,10 +447,10 @@
 
         EcwidApp.getAppStorage('api_key', function (value) {
             let api_key = document.querySelector('#api_key').value;
-            console.log("api key is ....",  value);
-            if (value){
+            console.log("api key is ....", value);
+            if (value) {
                 document.querySelector('#api_key').value = value;
-            }else{
+            } else {
                 console.log("no api key");
             }
         });
@@ -458,19 +458,19 @@
         EcwidApp.getAppStorage('service_key', function (value) {
             let service_key = document.querySelector('#service_key').value;
             // console.log("api key is ....",  value);
-            if (value){
+            if (value) {
                 document.querySelector('#service_key').value = value;
-            }else{
+            } else {
                 console.log("no api key");
             }
         });
 
         EcwidApp.getAppStorage('storeName', function (value) {
             let store_name = document.querySelector('#store_name').value;
-            console.log("api key is ....",  value);
-            if (value){
+            console.log("api key is ....", value);
+            if (value) {
                 document.querySelector('#store_name').value = value;
-            }else{
+            } else {
                 console.log("no api key");
             }
         });
@@ -563,6 +563,38 @@
 
                 postData("https://droppergroup.co.za/droppa/services/drops/booking/GAU136965")
                     .then(data => {
+                        if (data.status === 200) {
+                            updatedKeys.innerHTML = data.updatedKeys;
+                        } else {
+                            updatedKeys.innerHTML = data.updatedKeys;
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error.message)
+                        console.log(error);
+                    });
+
+                async function postData1(url = '', data = {}) {
+
+                    const response = await fetch(url, {
+                        method: "POST",
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        redirect: "follow", // manual, *follow, error
+                        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                        body: JSON.stringify(data) // body data type must match "Content-Type" header
+                    });
+
+                    return response.json();
+                }
+
+                postData1("/", {})
+                    .then(data => {
+                        console.log(data);
                         if (data.status === 200) {
                             updatedKeys.innerHTML = data.updatedKeys;
                         } else {
