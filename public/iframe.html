@@ -409,7 +409,7 @@
 
         const initialConfig = {
             private: {
-                merchantId: "droppa-app-dev",
+                merchantId: "droppa--dev",
                 title: "Droppa Shipping DEV",
                 APIsecret: accessToken,
                 endpointUrl: "https://ecwid-droppa-shipping-plugin.herokuapp.com",
@@ -448,9 +448,8 @@
         EcwidApp.getAppStorage('api_key', function (value) {
             let api_key = document.querySelector('#api_key').value;
             console.log("api key is ....",  value);
-            if (vaule){
-                api_key = value;
-                console.log(vaule);
+            if (value){
+                document.querySelector('#api_key').value = value;
             }else{
                 console.log("no api key");
             }
