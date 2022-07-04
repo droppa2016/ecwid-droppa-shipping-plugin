@@ -397,6 +397,7 @@
             autoloadedflag: true,
             autoheight: true
         });
+
         console.log("app loaded......");
         let storeData = EcwidApp.getPayload();
         let storeId = storeData.store_id;
@@ -474,7 +475,7 @@
             window.open("https://www.droppergroup.co.za/droppa/retail-Signin");
         })
 
-        /*document.getElementById('saveEcwidKeys').addEventListener('click', (e) => {
+        document.getElementById('saveEcwidKeys').addEventListener('click', (e) => {
             e.preventDefault();
 
             let { api_key,
@@ -532,7 +533,7 @@
                     console.log(value);
                 });
 
-                EcwidApp.getAppStorage(function (allKeys) {
+                /*EcwidApp.getAppStorage(function (allKeys) {
                     // prints an array of key : value objects from app storage
                     console.log(allKeys);
                     const saveEcwidSettings = new EcwidSettings(bodyData);
@@ -586,7 +587,7 @@
                                     });
                             }
                         });
-                });
+                });*/
 
                 postData("/save_user_keys", { bodyData })
                     .then(data => {
@@ -599,9 +600,9 @@
                     .catch(error => {
                         console.log(error.message)
                         console.log(error);
-                    });
+                });
             }
-        });*/
+        });
 
     </script>
 </body>
