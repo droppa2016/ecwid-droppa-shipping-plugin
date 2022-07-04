@@ -455,6 +455,26 @@
             }
         });
 
+        EcwidApp.getAppStorage('service_key', function (value) {
+            let service_key = document.querySelector('#service_key').value;
+            // console.log("api key is ....",  value);
+            if (value){
+                document.querySelector('#service_key').value = value;
+            }else{
+                console.log("no api key");
+            }
+        });
+
+        EcwidApp.getAppStorage('storeName', function (value) {
+            let store_name = document.querySelector('#store_name').value;
+            console.log("api key is ....",  value);
+            if (value){
+                document.querySelector('#store_name').value = value;
+            }else{
+                console.log("no api key");
+            }
+        });
+
         let store_Id = document.getElementById('storeId');
         let public_key = document.getElementById('public_key');
         let private_key = document.getElementById('private_key');
