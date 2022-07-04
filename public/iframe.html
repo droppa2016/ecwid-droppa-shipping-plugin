@@ -389,7 +389,7 @@
     <script src="https://app.ecwid.com/script.js?58231007"></script>
     <script src="https://djqizrxa6f10j.cloudfront.net/ecwid-sdk/js/1.2.8/ecwid-app.js"></script>
     <script src="https://d35z3p2poghz10.cloudfront.net/ecwid-sdk/css/1.3.8/ecwid-app-ui.min.js"></script>
-    <script src="/app.js"></script>
+    <script src="/app.js"> </script>
     <script>
 
         EcwidApp.init({
@@ -486,7 +486,7 @@
         async function postData(url = '', data = {}) {
 
             const response = await fetch(url, {
-                method: "POST",
+                method: "GET",
                 mode: 'cors', // no-cors, *cors, same-origin
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
                 credentials: 'same-origin', // include, *same-origin, omit
@@ -535,12 +535,6 @@
                 private_key: accessToken
             }
 
-            EcwidApp.getAppStorage(function (allKeys) {
-                console.log("These are the keys.......", allKeys);
-            });
-
-
-            console.log("This is body data......", bodyData);
             if (api_key.trim() === '') {
                 errorResultsAPI.innerHTML = 'Please Fill In The API Key Field.';
                 return false;
@@ -567,65 +561,7 @@
                     console.log(value);
                 });
 
-                // EcwidApp.getAppStorage(function (allKeys) {}
-
-                /*EcwidApp.getAppStorage(function (allKeys) {
-                    // prints an array of key : value objects from app storage
-                    console.log(allKeys);
-                    const saveEcwidSettings = new EcwidSettings(bodyData);
-
-                    EcwidSettings.findOne({ store_Id: `${bodyData.store_Id}` },
-                        async (error, foundStoreName) => {
-
-                            if (error) console.log({ error });
-
-                            if (foundStoreName === null) {
-                                return await saveEcwidSettings.save((error, savedResults) => {
-                                    if (error) console.log({ error });
-
-                                    fs.writeFile("./application_saved_keys.json", bodyData, function (err, data) {
-                                        if (err) {
-                                            return console.log(err);
-                                        }
-                                        console.log(data);
-                                    });
-
-                                    if (savedResults) {
-                                        res.json({
-                                            updatedKeys: 'Your keys were successfully saved.',
-                                            dataResponse: savedResults,
-                                            status: 200
-                                        });
-                                    }
-                                });
-                            } else {
-                                return await EcwidSettings.findOneAndUpdate(
-                                    { store_Id: newUserModel.api_key },
-                                    newUserModel,
-                                    { upsert: true, new: true },
-                                    async (error, results) => {
-                                        if (error) console.log({ error });
-
-                                        const storeInformation = await EcwidSettings.findOne({}).where('store_Id').equals(results.store_Id).exec();
-
-                                        fs.writeFile("./application_saved_keys.json", bodyData, function (err, data) {
-                                            if (err) {
-                                                return console.log(err);
-                                            }
-                                            console.log(data);
-                                        });
-
-                                        res.json({
-                                            updatedKeys: 'Your keys were successfully updated.',
-                                            dataResponse: storeInformation,
-                                            status: 200
-                                        });
-                                    });
-                            }
-                        });
-                });*/
-
-                postData("/save_user_keys", { bodyData })
+                postData("https://droppergroup.co.za/droppa/services/drops/booking/GAU136965", { bodyData })
                     .then(data => {
                         if (data.status === 200) {
                             updatedKeys.innerHTML = data.updatedKeys;
