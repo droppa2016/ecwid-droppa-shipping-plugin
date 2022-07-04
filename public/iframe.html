@@ -445,6 +445,17 @@
             console.log(`Installed Application: `, value);
         });
 
+        EcwidApp.getAppStorage('api_key', function (value) {
+            let api_key = document.querySelector('#api_key').value;
+            console.log("api key is ....",  value);
+            if (vaule){
+                api_key = value;
+                console.log(vaule);
+            }else{
+                console.log("no api key");
+            }
+        });
+
         let store_Id = document.getElementById('storeId');
         let public_key = document.getElementById('public_key');
         let private_key = document.getElementById('private_key');
@@ -606,7 +617,7 @@
                     .catch(error => {
                         console.log(error.message)
                         console.log(error);
-                });
+                    });
             }
         });
 
