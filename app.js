@@ -423,7 +423,7 @@ app.post('/webhook', async (req, res) => {
  * @returns     - save_user_keys
 */
 
-app.post('/save_user_keys', async (req, res) => {
+app.post('*', async (req, res) => {
 
     console.log("Post Hit......", req);
     console.log("Post Hit.....", res);
