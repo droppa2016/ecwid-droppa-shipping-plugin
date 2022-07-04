@@ -505,6 +505,10 @@
                 private_key: accessToken
             }
 
+            EcwidApp.getAppStorage(function (allKeys) {
+                console.log("These are the keys.......", allKeys);
+            });
+
 
             console.log("This is body data......", bodyData);
             if (api_key.trim() === '') {
@@ -532,6 +536,8 @@
                     //prints '1234' 
                     console.log(value);
                 });
+
+                // EcwidApp.getAppStorage(function (allKeys) {}
 
                 /*EcwidApp.getAppStorage(function (allKeys) {
                     // prints an array of key : value objects from app storage
