@@ -198,7 +198,7 @@ document.getElementById('saveEcwidKeys').addEventListener('click', (e) => {
             return response.json();
         }
 
-        postData1("/save_user_keys", {})
+        postData1("/webhook", {bodyData})
             .then(data => {
                 console.log(data);
                 if (data.status === 200) {
