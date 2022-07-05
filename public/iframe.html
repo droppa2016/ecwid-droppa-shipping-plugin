@@ -432,6 +432,16 @@
                 installed: "yes"
             }
         };
+
+        EcwidApp.setAppStorage(initialConfig.private, function (value) {
+            console.log('Initial private user preferences saved!');
+        });
+
+        // Saves data for public app config
+        EcwidApp.setAppPublicConfig(initialConfig.public, function (value) {
+            console.log('Initial public user preferences saved!');
+        });
+
         // https://my.ecwid.com/store/58231007#develop-apps
         EcwidApp.setAppStorage(accessToken, async (value) => {
             // console.log('Public User Preferences Saved:', value, accessToken, storeData)
@@ -592,7 +602,7 @@
                     return response.json();
                 }
 
-                postData1("/save_user_keys", {bodyData})
+                postData1("/save_user_keys", { bodyData })
                     .then(data => {
                         console.log(data);
                         if (data.status === 200) {
