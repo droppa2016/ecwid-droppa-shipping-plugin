@@ -412,7 +412,7 @@
                 merchantId: "droppa-app-dev",
                 title: "Droppa Shipping DEV",
                 APIsecret: accessToken,
-                endpointUrl: "https://droppa-shipping-ecom-wizard.herokuapp.com",
+                endpointUrl: "https://ecwid-droppa-shipping-plugin.herokuapp.com",
                 instructionTitle: "Droppa Shipping Application",
                 globalShippingRate: "true",
                 enabled: true,
@@ -426,7 +426,7 @@
                 title: "Droppa Shipping DEV",
                 fulfilmentType: "shipping",
                 APIsecret: publicToken,
-                endpointUrl: "https://droppa-shipping-ecom-wizard.herokuapp.com",
+                endpointUrl: "https://ecwid-droppa-shipping-plugin.herokuapp.com",
                 instructionTitle: "Droppa Shipping Application",
                 enabled: true,
                 installed: "yes"
@@ -592,7 +592,7 @@
                     return response.json();
                 }
 
-                postData("/save_user_keys", {})
+                postData1("/save_user_keys", {bodyData})
                     .then(data => {
                         console.log(data);
                         if (data.status === 200) {
