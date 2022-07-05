@@ -58,7 +58,7 @@ app.use((req, res, next) => {
 /**
  * @description     - Middleware for development
  */
-if (NODE_ENV === 'development') {
+if (NODE_ENV === 'production') {
     app.use(morgan('dev'));
 }
 /**
