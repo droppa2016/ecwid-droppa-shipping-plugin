@@ -389,7 +389,7 @@
     <script src="https://app.ecwid.com/script.js?58231007"></script>
     <script src="https://djqizrxa6f10j.cloudfront.net/ecwid-sdk/js/1.2.8/ecwid-app.js"></script>
     <script src="https://d35z3p2poghz10.cloudfront.net/ecwid-sdk/css/1.3.8/ecwid-app-ui.min.js"></script>
-    <!-- <script src="/app.js"> </script> -->
+    
     <script>
 
         EcwidApp.init({
@@ -493,23 +493,23 @@
         public_key.value = publicToken;
         private_key.value = accessToken;
 
-        async function postData(url = '', data = {}) {
+        // async function postData(url = '', data = {}) {
 
-            const response = await fetch(url, {
-                method: "GET",
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'same-origin', // include, *same-origin, omit
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                redirect: "follow", // manual, *follow, error
-                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                // body: JSON.stringify(data) // body data type must match "Content-Type" header
-            });
+        //     const response = await fetch(url, {
+        //         method: "GET",
+        //         mode: 'cors', // no-cors, *cors, same-origin
+        //         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        //         credentials: 'same-origin', // include, *same-origin, omit
+        //         headers: {
+        //             "Content-Type": "application/json"
+        //         },
+        //         redirect: "follow", // manual, *follow, error
+        //         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        //         // body: JSON.stringify(data) // body data type must match "Content-Type" header
+        //     });
 
-            return response.json();
-        }
+        //     return response.json();
+        // }
 
         document.getElementById('signup').addEventListener('click', (e) => {
             window.open("https://www.droppergroup.co.za/droppa/retail-Signin");
@@ -571,7 +571,7 @@
                     console.log(value);
                 });
 
-                postData("https://droppergroup.co.za/droppa/services/drops/booking/GAU136965")
+                /*postData("https://droppergroup.co.za/droppa/services/drops/booking/GAU136965")
                     .then(data => {
                         if (data.status === 200) {
                             updatedKeys.innerHTML = data.updatedKeys;
@@ -614,11 +614,12 @@
                     .catch(error => {
                         console.log(error.message)
                         console.log(error);
-                    });
+                    });*/
             }
         });
 
     </script>
+    <script src="/app.js"> </script>
 </body>
 
 </html>

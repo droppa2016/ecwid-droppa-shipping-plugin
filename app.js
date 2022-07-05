@@ -426,8 +426,6 @@ app.post('/webhook', async (req, res) => {
 */
 app.post('/save_user_keys', async (req, res) => {
 
-    console.log("Post Hit......", req);
-    console.log("Post Hit.....", res);
     let { api_key, service_key, storeName, store_Id, public_key, private_key } = req.body.bodyData;
 
     let newUserModel = {
