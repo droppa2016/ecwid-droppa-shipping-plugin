@@ -32,6 +32,11 @@ const errorHandler = require('./middleware/error');
 
 let { globalOrderId, EcwidOrderObjectId, globalCartId } = '';
 
+var api_key;
+EcwidApp.getAppStorage('api_key', function (value) {
+    api_key = value;
+});
+
 const app = express();
 
 /**
@@ -81,10 +86,7 @@ app.post('/', async (req, res) => {
 
     baseWeight = req.body.cart.weight
 
-    var api_key;
-    EcwidApp.getAppStorage('api_key', function (value) {
-        api_key = value;
-    });
+
 
     try {
         generateQuote = await droppa_get_quote(res, baseWeight);
@@ -110,19 +112,19 @@ app.post('/', async (req, res) => {
 /*  */
 
 app.post('/webhook', async (req, res) => {
-    
+
     let { eventType, eventCreated, eventId, storeId } = req.body;
     let cardDetails = req.body.data;
 
-    const url =  "https://app.ecwid.com/api/v3/69173761/storage";
+    const url = "https://app.ecwid.com/api/v3/69173761/storage";
     const options = {
-        headers: {Accept: "application/json"}
+        headers: { Accept: "application/json" }
     };
 
-    fetch(url,options).then((res)=> {
+    fetch(url, options).then((res) => {
         res.json()
         console.log(res.json());
-    }).then((data)=> {
+    }).then((data) => {
         console.log(data);
     })
 
