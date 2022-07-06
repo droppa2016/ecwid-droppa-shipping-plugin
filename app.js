@@ -61,12 +61,7 @@ app.use((req, res, next) => {
 if (NODE_ENV === 'production') {
     app.use(morgan('dev'));
 }
-const options = {method: 'GET', headers: {Accept: 'application/json'}};
 
-fetch('https://app.ecwid.com/api/v3/69173761/storage', options)
-  .then(response => response.json())
-  .then(response => console.log(response))
-  .catch(err => console.error(err));
 /**
  * @description     - Access Public Directory To View The iframe Html File
  */
@@ -86,6 +81,12 @@ app.post('/', async (req, res) => {
     if (!req.body.id && req.body.id === 'undefined') return false;
 
     baseWeight = req.body.cart.weight
+
+    try {
+        userdata = await getUserStorage()
+    } catch (error) {
+        return res.status(500).json({ error });
+    }
 
     try {
         generateQuote = await droppa_get_quote(res, baseWeight);
@@ -114,18 +115,6 @@ app.post('/webhook', async (req, res) => {
     
     let { eventType, eventCreated, eventId, storeId } = req.body;
     let cardDetails = req.body.data;
-
-    const url =  "https://app.ecwid.com/api/v3/69173761/storage";
-    const options = {
-        headers: {Accept: "application/json"}
-    };
-
-    fetch(url,options).then((res)=> {
-        res.json()
-        console.log(res.json());
-    }).then((data)=> {
-        console.log(data);
-    })
 
     const isTheStoreNameAvailable = await EcwidSettings.find({}).where("store_id").equals(storeId).exec();
 
