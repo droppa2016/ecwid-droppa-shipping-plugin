@@ -409,10 +409,10 @@
 
         const initialConfig = {
             private: {
-                merchantId: "droppa-app-dev",
+                merchantId: "droppa-dev",
                 title: "Droppa Shipping DEV",
                 APIsecret: accessToken,
-                endpointUrl: "https://ecwid-droppa-shipping-plugin.herokuapp.com",
+                endpointUrl: "https://droppa-shipping-ecom-wizard.herokuapp.com",
                 instructionTitle: "Droppa Shipping Application",
                 globalShippingRate: "true",
                 enabled: true,
@@ -422,11 +422,11 @@
                 aboutBusiness: "Droppa is an on demand delivery service that makes it safer and easier to move office or household goods and furniture. Once you’ve booked a Droppa delivery, you will be able to track your goods throughout the entire journey, from pick up to drop off! Our drivers go through a vigorous screening and training process where all checks are conducted and drivers are taught how to handle goods in transit."
             },
             public: {
-                merchantId: "droppa-app-dev",
+                merchantId: "droppa-dev",
                 title: "Droppa Shipping DEV",
                 fulfilmentType: "shipping",
                 APIsecret: publicToken,
-                endpointUrl: "https://ecwid-droppa-shipping-plugin.herokuapp.com",
+                endpointUrl: "https://droppa-shipping-ecom-wizard.herokuapp.com",
                 instructionTitle: "Droppa Shipping Application",
                 enabled: true,
                 installed: "yes"
@@ -442,7 +442,7 @@
             console.log('Initial public user preferences saved!');
         });
 
-        
+
         EcwidApp.getAppStorage('public', (value) => {
             console.log(`Installed Application: `, value);
         });
