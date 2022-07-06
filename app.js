@@ -82,11 +82,9 @@ app.post('/', async (req, res) => {
 
     baseWeight = req.body.cart.weight
 
-    try {
-        userdata = await getUserStorage()
-    } catch (error) {
-        return res.status(500).json({ error });
-    }
+    var userdata = await getUserStorage();
+    console.log(userdata);
+    
 
     try {
         generateQuote = await droppa_get_quote(res, baseWeight);

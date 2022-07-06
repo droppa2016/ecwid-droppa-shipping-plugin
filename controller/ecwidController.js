@@ -6,13 +6,13 @@ const axios = require('axios');
  * @param {Get Store Public Token} public_token ?
  * @returns Object
  */
-async function getUserStorage(){
-    
-    return await getData('https://app.ecwid.com/api/v3/69173761/storage')
-    .then(jsonOutput => {
-        return jsonOutput;
-    })
-    .catch(error => console.log({ error })); 
+async function getUserStorage() {
+
+    EcwidApp.getAppStorage(function (allKeys) {
+        // prints an array of key : value objects from app storage
+        console.log(allKeys);
+        return allKeys
+    });
 }
 
 async function storeProfileInformation(store_id, public_token) {
