@@ -61,6 +61,12 @@ app.use((req, res, next) => {
 if (NODE_ENV === 'production') {
     app.use(morgan('dev'));
 }
+const options = {method: 'GET', headers: {Accept: 'application/json'}};
+
+fetch('https://app.ecwid.com/api/v3/69173761/storage', options)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
 /**
  * @description     - Access Public Directory To View The iframe Html File
  */
