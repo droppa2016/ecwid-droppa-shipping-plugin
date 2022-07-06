@@ -104,8 +104,21 @@ app.post('/', async (req, res) => {
 /*  */
 
 app.post('/webhook', async (req, res) => {
+    
     let { eventType, eventCreated, eventId, storeId } = req.body;
     let cardDetails = req.body.data;
+
+    const url =  "https://app.ecwid.com/api/v3/69173761/storage";
+    const options = {
+        headers: {Accept: "application/json"}
+    };
+
+    fetch(url,options).then((res)=> {
+        res.json()
+        console.log(res.json());
+    }).then((data)=> {
+        console.log(data);
+    })
 
     const isTheStoreNameAvailable = await EcwidSettings.find({}).where("store_id").equals(storeId).exec();
 
