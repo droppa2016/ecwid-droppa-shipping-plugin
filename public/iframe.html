@@ -442,15 +442,7 @@
             console.log('Initial public user preferences saved!');
         });
 
-        // https://my.ecwid.com/store/58231007#develop-apps
-        EcwidApp.setAppStorage(accessToken, async (value) => {
-            // console.log('Public User Preferences Saved:', value, accessToken, storeData)
-        });
-
-        EcwidApp.setAppPublicConfig(accessToken, () => {
-            console.log('Public app config saved!')
-        });
-
+        
         EcwidApp.getAppStorage('public', (value) => {
             console.log(`Installed Application: `, value);
         });
