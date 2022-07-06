@@ -81,12 +81,17 @@ app.post('/', async (req, res) => {
 
     baseWeight = req.body.cart.weight
 
+    var api_key;
+    EcwidApp.getAppStorage('api_key', function (value) {
+        api_key = value;
+    });
+
     try {
         generateQuote = await droppa_get_quote(res, baseWeight);
         basePrice = generateQuote.data.price;
 
         shippingOptionsArray = new Array({
-            title: "Droppa Shipping (1 - 3 days)",
+            title: api_key,
             rate: (basePrice ? basePrice : 0.00),
             transitDays: "1-3",
             descriptions: "Courier Express"
