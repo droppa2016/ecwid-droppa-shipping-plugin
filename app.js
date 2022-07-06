@@ -73,6 +73,7 @@ app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "public", "ifram
  */
 
 app.post('/', async (req, res) => {
+    debugger;
     console.log("this side works.......");
     let { shippingOptionsArray, generateQuote, baseWeight, basePrice } = '';
 
