@@ -74,18 +74,12 @@ app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "public", "ifram
  */
 
 app.post('/', async (req, res) => {
-    debugger;
-    console.log("this side works.......");
     let { shippingOptionsArray, generateQuote, baseWeight, basePrice } = '';
 
     if (!req.body.id && req.body.id === 'undefined') return false;
 
     baseWeight = req.body.cart.weight
-
-    var userdata = await getUserStorage();
-    console.log(userdata);
     
-
     try {
         generateQuote = await droppa_get_quote(res, baseWeight);
         basePrice = generateQuote.data.price;
@@ -100,14 +94,11 @@ app.post('/', async (req, res) => {
         const shippingObject = {
             shippingOptions: shippingOptionsArray
         }
-
         return res.status(200).send(shippingObject);
-
     } catch (error) {
         return res.status(500).json({ error });
     }
 });
-/*  */
 
 app.post('/webhook', async (req, res) => {
     
