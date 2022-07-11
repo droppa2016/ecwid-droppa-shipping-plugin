@@ -10,6 +10,7 @@ const crypto = require('crypto');
 const colors = require('colors');
 const axios = require('axios');
 const fs = require('fs');
+const ewcid = require("./ecwidSdk");
 
 const { NODE_ENV, DROPPA_SERVICE_ID } = process.env;
 const webhookInstallationPath = "./application_installed.json";
@@ -74,6 +75,13 @@ app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "public", "ifram
  */
 
 app.post('/', async (req, res) => {
+
+    ewcid.init({
+        app_id: "droppa-dev",
+        autoloadedflag: true,
+        autoheight: true
+    });
+
     let { shippingOptionsArray, generateQuote, baseWeight, basePrice } = '';
 
     if (!req.body.id && req.body.id === 'undefined') return false;
