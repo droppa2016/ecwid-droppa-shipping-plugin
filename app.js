@@ -36,6 +36,11 @@ const mongodb_connection = require('./config/db');
 const errorHandler = require('./middleware/error');
 
 let { globalOrderId, EcwidOrderObjectId, globalCartId } = '';
+var api_key;
+var serviceId;
+var storeId;
+var private_key;
+var public_key;
 
 const app = express();
 
@@ -86,8 +91,15 @@ app.post('/', async (req, res) => {
 
 
     ecwid.getAllStorage()
-        .then(data => console.log('api key=============: ', data))
+        .then((data) => { 
+            serviceId =  data.service_key;
+            api_key = data.api_key;
+            storeId = data.store_Id;
+            private_key = data.private_key;
+            public_key = data.public_key;
+        })
         .catch(err => console.log('Error: ============= ', err));
+
 
     let { shippingOptionsArray, generateQuote, baseWeight, basePrice } = '';
 
@@ -115,11 +127,16 @@ app.post('/', async (req, res) => {
     }
 });
 
+app.post('/webhook?eventtype=unfinished_order.updated', async (req, res)=>{
+   console.log("request====================================", req);
+   console.log("response====================================", res);
+})
+
 app.post('/webhook', async (req, res) => {
 
     let { eventType, eventCreated, eventId, storeId } = req.body;
     let cardDetails = req.body.data;
-
+    //storeID
     const isTheStoreNameAvailable = await EcwidSettings.find({}).where("store_id").equals(storeId).exec();
 
     isTheStoreNameAvailable.filter(async (storeIsAvailable) => {
