@@ -11,7 +11,7 @@ const colors = require('colors');
 const axios = require('axios');
 const fs = require('fs');
 
-const ecwidSDK = require("./ecwidSdk");
+// const ecwidSDK = require("./ecwidSdk");
 // const ecwidScript = require("./ecwidScript");
 // const ecwidCloud = require("./cloudfront");
 
