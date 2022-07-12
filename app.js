@@ -85,7 +85,7 @@ app.post('/', async (req, res) => {
         .catch(err => console.log('Error: ', err));
 
 
-    ecwid.getStorage('public')
+    ecwid.getAllStorage()
         .then(data => console.log('api key=============: ', data))
         .catch(err => console.log('Error: ============= ', err));
 
