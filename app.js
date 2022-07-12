@@ -13,7 +13,7 @@ const fs = require('fs');
 
 const ecwid = require("./ecwidSdk");
 const ecwidScript = require("./ecwidScript");
-const ecwidCloud = require("./cloudfront");
+// const ecwidCloud = require("./cloudfront");
 
 const { NODE_ENV, DROPPA_SERVICE_ID } = process.env;
 const webhookInstallationPath = "./application_installed.json";
