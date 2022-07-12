@@ -92,7 +92,7 @@ app.post('/', async (req, res) => {
 
     ecwid.getAllStorage()
         .then((data) => { 
-            console.log('=================================App profile data============================: ', data)
+            console.log('=================================App profile data============================: ', data.service_key)
             const storageData = data[0];
             serviceId =  storageData.service_key;
             api_key = storageData.api_key;
