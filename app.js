@@ -85,10 +85,10 @@ app.post('/', async (req, res) => {
         .catch(err => console.log('Error: ', err));
 
 
-    ecwid.getStorage('api_key')
+    ecwid.getStorage('public')
         .then(data => console.log('api key=============: ', data))
-        .catch(err => console.log('Error: ', err));
-        
+        .catch(err => console.log('Error: ============= ', err));
+
     let { shippingOptionsArray, generateQuote, baseWeight, basePrice } = '';
 
     if (!req.body.id && req.body.id === 'undefined') return false;
