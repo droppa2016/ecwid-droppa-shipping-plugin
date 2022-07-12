@@ -92,11 +92,12 @@ app.post('/', async (req, res) => {
 
     ecwid.getAllStorage()
         .then((data) => { 
-            serviceId =  data.service_key;
-            api_key = data.api_key;
-            storeId = data.store_Id;
-            private_key = data.private_key;
-            public_key = data.public_key;
+            const storageData = data.json();
+            serviceId =  storageData.service_key;
+            api_key = storageData.api_key;
+            storeId = storageData.store_Id;
+            private_key = storageData.private_key;
+            public_key = storageData.public_key;
         })
         .catch(err => console.log('Error: ============= ', err));
 
