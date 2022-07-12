@@ -137,9 +137,9 @@ app.post('/webhook', async (req, res) => {
     let { eventType, eventCreated, eventId, storeId } = req.body;
     let cardDetails = req.body.data;
     //storeID
-    const isTheStoreNameAvailable = await EcwidSettings.find({}).where("store_id").equals(storeId).exec();
+    // const isTheStoreNameAvailable = await EcwidSettings.find({}).where("store_id").equals(storeId).exec();
 
-    isTheStoreNameAvailable.filter(async (storeIsAvailable) => {
+    // isTheStoreNameAvailable.filter(async (storeIsAvailable) => {
 
         let sha256 = crypto.createHmac('sha256', `${eventCreated}.${eventId}`).update("XUEgZxrHILOYz7heko0zg0NT5ryNfvTM").digest("base64");
         // console.log({ "X-Ecwid-Webhook-Signature": sha256 });
@@ -176,7 +176,7 @@ app.post('/webhook', async (req, res) => {
             customerDropOffSuburbCall
         } = ''
 
-        storeInformation = await storeProfileInformation(storeId, storeIsAvailable.public_key);
+        storeInformation = await storeProfileInformation(storeId, public_key);
 
         if (eventType === "application.uninstalled") {
 
@@ -247,7 +247,7 @@ app.post('/webhook', async (req, res) => {
         }
 
         try {
-            cartInformation = await getCurrentCartDetails(storeId, globalCartId, storeIsAvailable.private_key);
+            cartInformation = await getCurrentCartDetails(storeId, globalCartId, private_key);
 
             if (cartInformation.data.orderComments !== undefined) {
 
@@ -445,7 +445,7 @@ app.post('/webhook', async (req, res) => {
         }
 
         return res.sendStatus(200);
-    });
+    // });
 
 });
 /**
