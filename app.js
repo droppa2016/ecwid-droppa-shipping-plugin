@@ -10,6 +10,7 @@ const crypto = require('crypto');
 const colors = require('colors');
 const axios = require('axios');
 const fs = require('fs');
+const ecwid = require('ecwid-api')(69173761, 'public_DbBt2ZRuHm6JaVHfuAn9TMKLSJfZ1qvT');
 
 // const ecwidSDK = require("./ecwidSdk");
 // const ecwidScript = require("./ecwidScript");
@@ -79,12 +80,16 @@ app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "public", "ifram
 
 app.post('/', async (req, res) => {
 
+    ecwid.getStoreProfile()
+        .then(data => console.log('Store profile data: ', data))
+        .catch(err => console.log('Error: ', err));
+
     let { shippingOptionsArray, generateQuote, baseWeight, basePrice } = '';
 
     if (!req.body.id && req.body.id === 'undefined') return false;
 
     baseWeight = req.body.cart.weight
-    
+
     try {
         generateQuote = await droppa_get_quote(res, baseWeight);
         basePrice = generateQuote.data.price;
@@ -106,7 +111,7 @@ app.post('/', async (req, res) => {
 });
 
 app.post('/webhook', async (req, res) => {
-    
+
     let { eventType, eventCreated, eventId, storeId } = req.body;
     let cardDetails = req.body.data;
 
