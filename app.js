@@ -10,7 +10,7 @@ const crypto = require('crypto');
 const colors = require('colors');
 const axios = require('axios');
 const fs = require('fs');
-const ecwid = require('ecwid-api')(69173761, 'public_DbBt2ZRuHm6JaVHfuAn9TMKLSJfZ1qvT');
+const ecwid = require('ecwid-api')(69173761, 'secret_HsKDT1jrxwNqRvYBJYRnJdV1LtYsZGyc');
 
 // const ecwidSDK = require("./ecwidSdk");
 // const ecwidScript = require("./ecwidScript");
