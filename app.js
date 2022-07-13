@@ -105,7 +105,16 @@ app.post('/', async (req, res) => {
 
             data.forEach(element => {
                 console.log('=================================App profile element ============================: ', element.key)
+                if (element.key == service_key ){
+                    console.log("found service key");
+                }
+
+                if (element.key == "api_key" ){
+                    console.log("found api key");
+                    api_key = element.value;
+                }
             });
+
             const storageData = data[0];
             serviceId =  storageData.service_key;
             api_key = storageData.api_key;
