@@ -86,17 +86,20 @@ app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "public", "ifram
 app.post('/', async (req, res) => {
 
     ecwid.getStoreProfile()
-        .then(data => console.log('Store profile data: ', data))
+        .then(data => {console.log('Store profile data: ', data)})
         .catch(err => console.log('Error: ', err));
 
     ecwid.getStorage('api_key')
-    .then(data => console.log('api_key===========: ', data))
+    .then(data => {
+        console.log('api_key===========: ', data)
+    })
     .catch(err => console.log('Error: ', err));
 
 
     ecwid.getAllStorage()
         .then((data) => { 
-            console.log('=================================App profile data============================: ', data.service_key)
+            console.log('=================================App profile data============================: ', data.value)
+            console.log('=================================App profile data============================: ', Object.keys(data));
             const storageData = data[0];
             serviceId =  storageData.service_key;
             api_key = storageData.api_key;
