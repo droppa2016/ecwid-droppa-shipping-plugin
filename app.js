@@ -408,7 +408,7 @@ app.post('/webhook', async (req, res) => {
 
                         const ecwirdOrderId = await EcwidOrders.findOne({}).where('ecwid_order_id').equals(globalOrderId).exec();
 
-                        if (ecwirdOrderId !== null) return res.sendStatus(400);
+                        if (globalOrderId !== null) return res.sendStatus(400);
 
                         createDroppaBookings = await droppa_post_booking(postBookingObject);
 
@@ -423,7 +423,7 @@ app.post('/webhook', async (req, res) => {
                         if (createDroppaBookings.status === 200) {
                             EcwidOrderObjectId = createDroppaBookings.data.oid;
 
-                            await EcwidOrders.create(neworder_indb);
+                            // await EcwidOrders.create(neworder_indb);
                         }
 
                         return res.sendStatus(200);
