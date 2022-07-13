@@ -98,10 +98,14 @@ app.post('/', async (req, res) => {
 
     ecwid.getAllStorage()
         .then((data) => { 
-            
+
             console.log('=================================App profile entries============================: ', Object.entries(data))
             console.log('=================================App profile keys============================: ', Object.keys(data));
             console.log('=================================App profile data============================: ', Object.values(data));
+
+            data.forEach(element => {
+                console.log('=================================App profile element ============================: ', element.key)
+            });
             const storageData = data[0];
             serviceId =  storageData.service_key;
             api_key = storageData.api_key;
