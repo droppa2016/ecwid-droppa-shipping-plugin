@@ -98,7 +98,7 @@ app.post('/', async (req, res) => {
 
     ecwid.getAllStorage()
         .then((data) => { 
-            
+
             var userData = [];
             var setData = {};
 
@@ -110,7 +110,7 @@ app.post('/', async (req, res) => {
             });
 
             console.log('userdata===========: ', userData)
-            const storageData = data[0];
+            const storageData = userData[0];
             serviceId =  storageData.service_key;
             api_key = storageData.api_key;
             storeId = storageData.store_Id;
