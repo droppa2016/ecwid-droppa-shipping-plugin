@@ -105,7 +105,7 @@ app.post('/', async (req, res) => {
 
             data.forEach(element => {
                 console.log('=================================App profile element ============================: ', element.key)
-                if (element.key == service_key ){
+                if (element.key == "service_key" ){
                     console.log("found service key");
                 }
 
