@@ -404,7 +404,7 @@ app.post('/webhook', async (req, res) => {
                         console.log("==================================booking data", postBookingObject)
                         // const ecwirdOrderId = await EcwidOrders.findOne({}).where('ecwid_order_id').equals(globalOrderId).exec();
 
-                        if (globalOrderId !== null) return res.sendStatus(400);
+                        // if (globalOrderId !== null) return res.sendStatus(400);
 
                         createDroppaBookings = await droppa_post_booking(postBookingObject);
 
