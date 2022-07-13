@@ -109,8 +109,9 @@ app.post('/', async (req, res) => {
                 }
             });
 
-            console.log('userdata===========: ', userData)
+            // console.log('userdata===========: ', userData)
             const storageData = userData[0];
+            console.log('storage data is ===========: ', storageData)
             serviceId =  storageData.service_key;
             api_key = storageData.api_key;
             storeId = storageData.store_Id;
