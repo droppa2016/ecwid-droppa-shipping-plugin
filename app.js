@@ -406,19 +406,19 @@ app.post('/webhook', async (req, res) => {
                             "storeName": `${ecwidProfileStoreName}.site`,
                         }
 
-                        const ecwirdOrderId = await EcwidOrders.findOne({}).where('ecwid_order_id').equals(globalOrderId).exec();
+                        // const ecwirdOrderId = await EcwidOrders.findOne({}).where('ecwid_order_id').equals(globalOrderId).exec();
 
                         if (globalOrderId !== null) return res.sendStatus(400);
 
                         createDroppaBookings = await droppa_post_booking(postBookingObject);
 
-                        let neworder_indb = new EcwidOrders({
+                        /*let neworder_indb = new EcwidOrders({
                             serviceId: serviceId,
                             droppa_booking_oid: createDroppaBookings.data.oid,
                             droppa_tracknumber: createDroppaBookings.data.trackNo,
                             droppa_booking_type: createDroppaBookings.data.type,
                             ecwid_order_id: globalOrderId
-                        });
+                        });*/
 
                         if (createDroppaBookings.status === 200) {
                             EcwidOrderObjectId = createDroppaBookings.data.oid;
