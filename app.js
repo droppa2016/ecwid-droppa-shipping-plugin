@@ -381,7 +381,7 @@ app.post('/webhook', async (req, res) => {
                         customerDropOffSuburb = customerDropOffSuburbCall.data.suburb;
 
                         postBookingObject = {
-                            "serviceId": DROPPA_SERVICE_ID,
+                            "serviceId": serviceId,
                             "platform": "Ecwid",
                             "pickUpPCode": ecwidPickUpPostalCode,
                             "dropOffPCode": customerPostalCode,
@@ -413,7 +413,7 @@ app.post('/webhook', async (req, res) => {
                         createDroppaBookings = await droppa_post_booking(postBookingObject);
 
                         let neworder_indb = new EcwidOrders({
-                            serviceId: process.env.DROPPA_SERVICE_ID,
+                            serviceId: serviceId,
                             droppa_booking_oid: createDroppaBookings.data.oid,
                             droppa_tracknumber: createDroppaBookings.data.trackNo,
                             droppa_booking_type: createDroppaBookings.data.type,
