@@ -104,7 +104,7 @@ app.post('/', async (req, res) => {
                 setData[element.key] = element.value;
                 userData.push(setData)
             });
-            console.log('UserData: ============= ', userData)
+            console.log('userdata===========: ', userData)
             const storageData = data[0];
             serviceId =  storageData.service_key;
             api_key = storageData.api_key;
