@@ -101,9 +101,7 @@ app.post('/', async (req, res) => {
             var userData = [];
 
             data.forEach(element => {
-                let keys = element.key;
-                let values = element.value
-                let value = {keys : values }
+                let value = element;
                 userData.push(value)
             });
             console.log('UserData: ============= ', userData)
