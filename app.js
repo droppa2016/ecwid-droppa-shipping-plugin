@@ -98,12 +98,17 @@ app.post('/', async (req, res) => {
 
     ecwid.getAllStorage()
         .then((data) => { 
+            
             var userData = [];
             var setData = {};
+
             data.forEach(element => {
-                setData[element.key] = element.value;
-                userData.push(setData)
+                if (element.key == "service_key" ||  element.key == "api_key" || element.key == "store_Id" || element.key == "private_key" || element.key == "public_key"){
+                    setData[element.key] = element.value;
+                    userData.push(setData)
+                }
             });
+
             console.log('userdata===========: ', userData)
             const storageData = data[0];
             serviceId =  storageData.service_key;
