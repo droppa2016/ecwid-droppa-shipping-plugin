@@ -86,37 +86,31 @@ app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "public", "ifram
 app.post('/', async (req, res) => {
 
     ecwid.getStoreProfile()
-        .then(data => { console.log('Store profile data: ', data) })
+        .then(data => {console.log('Store profile data: ', data)})
         .catch(err => console.log('Error: ', err));
 
     ecwid.getStorage('api_key')
-        .then(data => {
-            console.log('api_key===========: ', data)
-        })
-        .catch(err => console.log('Error: ', err));
+    .then(data => {
+        console.log('api_key===========: ', data)
+    })
+    .catch(err => console.log('Error: ', err));
 
 
     ecwid.getAllStorage()
-        .then((data) => {
+        .then((data) => { 
             var userData = [];
-
+            var setData = {};
             data.forEach(element => {
-                let value = element;
-                userData.push(value)
+                setData[element.key] = element.value;
+                userData.push(setData)
             });
             console.log('UserData: ============= ', userData)
-
-            const obj = Object.assign({}, ...data);
-
-            console.log('UserData Oject: ============= ', obj);
             const storageData = data[0];
-            serviceId = storageData.service_key;
+            serviceId =  storageData.service_key;
             api_key = storageData.api_key;
             storeId = storageData.store_Id;
             private_key = storageData.private_key;
             public_key = storageData.public_key;
-
-
         })
         .catch(err => console.log('Error: ============= ', err));
 
@@ -147,9 +141,9 @@ app.post('/', async (req, res) => {
     }
 });
 
-app.post('/webhook?eventtype=unfinished_order.updated', async (req, res) => {
-    console.log("request====================================", req);
-    console.log("response====================================", res);
+app.post('/webhook?eventtype=unfinished_order.updated', async (req, res)=>{
+   console.log("request====================================", req);
+   console.log("response====================================", res);
 })
 
 app.post('/webhook', async (req, res) => {
@@ -161,310 +155,310 @@ app.post('/webhook', async (req, res) => {
 
     // isTheStoreNameAvailable.filter(async (storeIsAvailable) => {
 
-    let sha256 = crypto.createHmac('sha256', `${eventCreated}.${eventId}`).update("XUEgZxrHILOYz7heko0zg0NT5ryNfvTM").digest("base64");
-    // console.log({ "X-Ecwid-Webhook-Signature": sha256 });
+        let sha256 = crypto.createHmac('sha256', `${eventCreated}.${eventId}`).update("XUEgZxrHILOYz7heko0zg0NT5ryNfvTM").digest("base64");
+        // console.log({ "X-Ecwid-Webhook-Signature": sha256 });
 
-    let {
-        postBookingObject,
-        parcelDims,
-        orderComments,
-        ecwidProductTotalWeight,
-        companyPickUpSuburb,
-        companyProvince,
-        ecwidProfileCompanyCompanyCity,
-        ecwidProfileCompanyName,
-        ecwidProfileStoreName,
-        companyStreetAddress,
-        ecwidPickUpPostalCode,
-        companyPickUpSuburbCall
-    } = '';
+        let {
+            postBookingObject,
+            parcelDims,
+            orderComments,
+            ecwidProductTotalWeight,
+            companyPickUpSuburb,
+            companyProvince,
+            ecwidProfileCompanyCompanyCity,
+            ecwidProfileCompanyName,
+            ecwidProfileStoreName,
+            companyStreetAddress,
+            ecwidPickUpPostalCode,
+            companyPickUpSuburbCall
+        } = '';
 
-    let { storeInformation, cartInformation, orderInformation, createDroppaBookings, makePaymentForCurrentBooking } = '';
+        let { storeInformation, cartInformation, orderInformation, createDroppaBookings, makePaymentForCurrentBooking } = '';
 
-    let {
-        customerCompanyName,
-        customerStreet,
-        customerCity,
-        customerPostalCode,
-        customerLastName,
-        customerFirstName,
-        customerPhoneNumber,
-        customerFullName,
-        customerProvince,
-        customerEmail,
-        customerDropOffSuburb,
-        customerDropOffSuburbCall
-    } = ''
+        let {
+            customerCompanyName,
+            customerStreet,
+            customerCity,
+            customerPostalCode,
+            customerLastName,
+            customerFirstName,
+            customerPhoneNumber,
+            customerFullName,
+            customerProvince,
+            customerEmail,
+            customerDropOffSuburb,
+            customerDropOffSuburbCall
+        } = ''
 
-    storeInformation = await storeProfileInformation(storeId, public_key);
+        storeInformation = await storeProfileInformation(storeId, public_key);
 
-    if (eventType === "application.uninstalled") {
+        if (eventType === "application.uninstalled") {
 
-        const isDataAvailableToRemove = await EcwidSettings.findOne({}).where("storeId").equals(storeId).exec();
+            const isDataAvailableToRemove = await EcwidSettings.findOne({}).where("storeId").equals(storeId).exec();
 
-        if (isDataAvailableToRemove !== null) {
-            EcwidSettings.findByIdAndDelete({ _id: isDataAvailableToRemove._id }, (error, recordDeleted) => {
-                if (error) console.log({ error });
+            if (isDataAvailableToRemove !== null) {
+                EcwidSettings.findByIdAndDelete({ _id: isDataAvailableToRemove._id }, (error, recordDeleted) => {
+                    if (error) console.log({ error });
 
-                console.log('Droppa App has been successfully uninstalled.');
-                return res.sendStatus(200);
-            });
-        }
-        console.log('Droppa App has been successfully uninstalled.');
-        return res.sendStatus(200);
-    }
-
-    ecwidProfileCompanyName = storeInformation.data.company.companyName;
-    ecwidProfileStoreName = storeInformation.data.generalInfo.storeUrl.substring(8, storeInformation.data.generalInfo.storeUrl.indexOf(".site"));
-    companyStreetAddress = storeInformation.data.company.street;
-    ecwidPickUpPostalCode = storeInformation.data.company.postalCode;
-    ecwidProfileCompanyCompanyCity = storeInformation.data.company.city;
-
-    switch (storeInformation.data.company.stateOrProvinceCode) {
-        case 'EC':
-            companyProvince = "EASTERN_CAPE";
-            break;
-
-        case 'FS':
-            companyProvince = "FREE_STATE";
-            break;
-
-        case 'GP':
-            companyProvince = "GAUTENG";
-            break;
-
-        case 'KZN':
-            companyProvince = "KWA_ZULU_NATAL";
-            break;
-
-        case 'LP':
-            companyProvince = "LIMPOPO";
-            break;
-
-        case 'MP':
-            companyProvince = "MPUMALANGA";
-            break;
-
-        case 'NC':
-            companyProvince = "NORTHERN_CAPE";
-            break;
-
-        case 'NW':
-            companyProvince = "NORTHERN_WEST";
-            break;
-
-        case 'WC':
-            companyProvince = "WESTERN_CAPE";
-            break;
-    }
-
-    if (eventType === "unfinished_order.created") {
-        globalOrderId = req.body.data.orderId;
-        globalCartId = cardDetails.cartId;
-        console.log(globalCartId === cardDetails.cartId, globalCartId, cardDetails.cartId);
-        console.log(globalOrderId === cardDetails.orderId, globalOrderId, cardDetails.orderId);
-        return res.sendStatus(200);
-    }
-
-    try {
-        cartInformation = await getCurrentCartDetails(storeId, globalCartId, private_key);
-
-        if (cartInformation.data.orderComments !== undefined) {
-
-            if (eventType === "unfinished_order.updated") {
-                if ((globalCartId === cardDetails.cartId) || (globalOrderId === cardDetails.orderId)) {
-
-                    switch (cartInformation.data.shippingPerson.stateOrProvinceCode) {
-                        case 'EC':
-                            customerProvince = "EASTERN_CAPE";
-                            break;
-
-                        case 'FS':
-                            customerProvince = "FREE_STATE";
-                            break;
-
-                        case 'GP':
-                            customerProvince = "GAUTENG";
-                            break;
-
-                        case 'KZN':
-                            customerProvince = "KWA_ZULU_NATAL";
-                            break;
-
-                        case 'LP':
-                            customerProvince = "LIMPOPO";
-                            break;
-
-                        case 'MP':
-                            customerProvince = "MPUMALANGA";
-                            break;
-
-                        case 'NC':
-                            customerProvince = "NORTHERN_CAPE";
-                            break;
-
-                        case 'NW':
-                            customerProvince = "NORTHERN_WEST";
-                            break;
-
-                        case 'WC':
-                            customerProvince = "WESTERN_CAPE";
-                            break;
-                    }
-
-                    // switch (cartInformation.data.billingPerson.stateOrProvinceCode) {
-                    //     case 'EC':
-                    //         customerProvince = "EASTERN_CAPE";
-                    //         break;
-
-                    //     case 'FS':
-                    //         customerProvince = "FREE_STATE";
-                    //         break;
-
-                    //     case 'GP':
-                    //         customerProvince = "GAUTENG";
-                    //         break;
-
-                    //     case 'KZN':
-                    //         customerProvince = "KWA_ZULU_NATAL";
-                    //         break;
-
-                    //     case 'LP':
-                    //         customerProvince = "LIMPOPO";
-                    //         break;
-
-                    //     case 'MP':
-                    //         customerProvince = "MPUMALANGA";
-                    //         break;
-
-                    //     case 'NC':
-                    //         customerProvince = "NORTHERN_CAPE";
-                    //         break;
-
-                    //     case 'NW':
-                    //         customerProvince = "NORTHERN_WEST";
-                    //         break;
-
-                    //     case 'WC':
-                    //         customerProvince = "WESTERN_CAPE";
-                    //         break;
-                    // }
-
-                    cartInformation.data.items.filter((item) => {
-                        if (item.weight !== 0) {
-                            parcelDims = new Array({
-                                "parcel_length": 0,
-                                "parcel_breadth": 0,
-                                "parcel_height": 0,
-                                "parcel_mass": item.weight
-                            });
-                        }
-                    });
-
-                    customerCompanyName = (cartInformation.data.shippingPerson.companyName ? cartInformation.data.shippingPerson.companyName : 'Null');
-                    customerStreet = (cartInformation.data.shippingPerson.street ? cartInformation.data.shippingPerson.street : cartInformation.data.billingPerson.street);
-                    customerCity = (cartInformation.data.shippingPerson.city ? cartInformation.data.shippingPerson.city : cartInformation.data.billingPerson.city);
-                    customerPostalCode = (cartInformation.data.shippingPerson.postalCode ? cartInformation.data.shippingPerson.postalCode : cartInformation.data.billingPerson.postalCode);
-                    customerLastName = (cartInformation.data.shippingPerson.lastName ? cartInformation.data.shippingPerson.lastName : cartInformation.data.billingPerson.lastName);
-                    customerFirstName = (cartInformation.data.shippingPerson.firstName ? cartInformation.data.shippingPerson.firstName : cartInformation.data.billingPerson.firstName);
-                    customerPhoneNumber = (cartInformation.data.shippingPerson.phone ? cartInformation.data.shippingPerson.phone : cartInformation.data.billingPerson.phone);
-                    customerFullName = (cartInformation.data.shippingPerson.name ? cartInformation.data.shippingPerson.name : cartInformation.data.billingPerson.name);
-                    customerEmail = cartInformation.data.email;
-
-                    if (ecwidPickUpPostalCode)
-                        companyPickUpSuburbCall = await getCorrectSuburbName(ecwidPickUpPostalCode);
-
-                    if (customerPostalCode)
-                        customerDropOffSuburbCall = await getCorrectSuburbName(customerPostalCode);
-
-                    companyPickUpSuburb = companyPickUpSuburbCall.data.suburb;
-                    customerDropOffSuburb = customerDropOffSuburbCall.data.suburb;
-
-                    postBookingObject = {
-                        "serviceId": DROPPA_SERVICE_ID,
-                        "platform": "Ecwid",
-                        "pickUpPCode": ecwidPickUpPostalCode,
-                        "dropOffPCode": customerPostalCode,
-                        "fromSuburb": companyPickUpSuburb,
-                        "toSuburb": customerDropOffSuburb,
-                        "province": companyProvince ? companyProvince : 'Null',
-                        "destinationProvince": customerProvince ? customerProvince : 'Null',
-                        "pickUpAddress": `${companyStreetAddress}, ${companyPickUpSuburb}, ${ecwidPickUpPostalCode}`,
-                        "pickUpCompanyName": (ecwidProfileCompanyName ? ecwidProfileCompanyName : ""),
-                        "customerName": customerFirstName,
-                        "customerSurname": customerLastName,
-                        "customerPhone": customerPhoneNumber,
-                        "customerEmail": customerEmail,
-                        "price": cartInformation.data.shippingOption.shippingRate,
-                        "dropOffAddress": `${customerStreet}, ${customerDropOffSuburb}, ${customerPostalCode}`,
-                        "dropOffCompanyName": (customerCompanyName ? customerCompanyName : ""),
-                        "pickUpUnitNo": "",
-                        "dropOffUnitNo": "",
-                        "parcelDimensions": parcelDims,
-                        "instructions": (cartInformation.data.orderComments ? cartInformation.data.orderComments : 'Default Ecommerce widget Instructions'),
-                        "shopify_orderNo": globalOrderId,
-                        "storeName": `${ecwidProfileStoreName}.site`,
-                    }
-
-                    const ecwirdOrderId = await EcwidOrders.findOne({}).where('ecwid_order_id').equals(globalOrderId).exec();
-
-                    if (ecwirdOrderId !== null) return res.sendStatus(400);
-
-                    createDroppaBookings = await droppa_post_booking(postBookingObject);
-
-                    let neworder_indb = new EcwidOrders({
-                        serviceId: process.env.DROPPA_SERVICE_ID,
-                        droppa_booking_oid: createDroppaBookings.data.oid,
-                        droppa_tracknumber: createDroppaBookings.data.trackNo,
-                        droppa_booking_type: createDroppaBookings.data.type,
-                        ecwid_order_id: globalOrderId
-                    });
-
-                    if (createDroppaBookings.status === 200) {
-                        EcwidOrderObjectId = createDroppaBookings.data.oid;
-
-                        await EcwidOrders.create(neworder_indb);
-                    }
-
+                    console.log('Droppa App has been successfully uninstalled.');
                     return res.sendStatus(200);
-                }
-                return res.sendStatus(200);
+                });
             }
-
-            if (eventType === "order.created") {
-                try {
-                    if ((cardDetails.newPaymentStatus === "PAID") || (cardDetails.oldPaymentStatus === "PAID")) {
-                        makePaymentForCurrentBooking = await droppa_post_payment(EcwidOrderObjectId);
-
-                        console.log(makePaymentForCurrentBooking)
-
-                        if (makePaymentForCurrentBooking.data.oid) {
-                            return res.sendStatus(200);
-                        }
-                    }
-                } catch (error) {
-                    console.log({ "Payment Gateway Error": error })
-                    return res.sendStatus(200);
-                }
-            }
-
-            if (eventType === "order.deleted") {
-                console.log("Order Cancelled");
-                return res.sendStatus(200);
-            }
-
-            if (eventType === "unfinished_order.deleted") {
-                console.log("Unfinished Order Cancelled");
-                return res.sendStatus(200);
-            }
+            console.log('Droppa App has been successfully uninstalled.');
+            return res.sendStatus(200);
         }
 
-    } catch (error) {
-        console.log({ "Booking Gateway Error": error })
-        return res.status(200).send(error);
-    }
+        ecwidProfileCompanyName = storeInformation.data.company.companyName;
+        ecwidProfileStoreName = storeInformation.data.generalInfo.storeUrl.substring(8, storeInformation.data.generalInfo.storeUrl.indexOf(".site"));
+        companyStreetAddress = storeInformation.data.company.street;
+        ecwidPickUpPostalCode = storeInformation.data.company.postalCode;
+        ecwidProfileCompanyCompanyCity = storeInformation.data.company.city;
 
-    return res.sendStatus(200);
+        switch (storeInformation.data.company.stateOrProvinceCode) {
+            case 'EC':
+                companyProvince = "EASTERN_CAPE";
+                break;
+
+            case 'FS':
+                companyProvince = "FREE_STATE";
+                break;
+
+            case 'GP':
+                companyProvince = "GAUTENG";
+                break;
+
+            case 'KZN':
+                companyProvince = "KWA_ZULU_NATAL";
+                break;
+
+            case 'LP':
+                companyProvince = "LIMPOPO";
+                break;
+
+            case 'MP':
+                companyProvince = "MPUMALANGA";
+                break;
+
+            case 'NC':
+                companyProvince = "NORTHERN_CAPE";
+                break;
+
+            case 'NW':
+                companyProvince = "NORTHERN_WEST";
+                break;
+
+            case 'WC':
+                companyProvince = "WESTERN_CAPE";
+                break;
+        }
+
+        if (eventType === "unfinished_order.created") {
+            globalOrderId = req.body.data.orderId;
+            globalCartId = cardDetails.cartId;
+            console.log(globalCartId === cardDetails.cartId, globalCartId, cardDetails.cartId);
+            console.log(globalOrderId === cardDetails.orderId, globalOrderId, cardDetails.orderId);
+            return res.sendStatus(200);
+        }
+
+        try {
+            cartInformation = await getCurrentCartDetails(storeId, globalCartId, private_key);
+
+            if (cartInformation.data.orderComments !== undefined) {
+
+                if (eventType === "unfinished_order.updated") {
+                    if ((globalCartId === cardDetails.cartId) || (globalOrderId === cardDetails.orderId)) {
+
+                        switch (cartInformation.data.shippingPerson.stateOrProvinceCode) {
+                            case 'EC':
+                                customerProvince = "EASTERN_CAPE";
+                                break;
+
+                            case 'FS':
+                                customerProvince = "FREE_STATE";
+                                break;
+
+                            case 'GP':
+                                customerProvince = "GAUTENG";
+                                break;
+
+                            case 'KZN':
+                                customerProvince = "KWA_ZULU_NATAL";
+                                break;
+
+                            case 'LP':
+                                customerProvince = "LIMPOPO";
+                                break;
+
+                            case 'MP':
+                                customerProvince = "MPUMALANGA";
+                                break;
+
+                            case 'NC':
+                                customerProvince = "NORTHERN_CAPE";
+                                break;
+
+                            case 'NW':
+                                customerProvince = "NORTHERN_WEST";
+                                break;
+
+                            case 'WC':
+                                customerProvince = "WESTERN_CAPE";
+                                break;
+                        }
+
+                        // switch (cartInformation.data.billingPerson.stateOrProvinceCode) {
+                        //     case 'EC':
+                        //         customerProvince = "EASTERN_CAPE";
+                        //         break;
+
+                        //     case 'FS':
+                        //         customerProvince = "FREE_STATE";
+                        //         break;
+
+                        //     case 'GP':
+                        //         customerProvince = "GAUTENG";
+                        //         break;
+
+                        //     case 'KZN':
+                        //         customerProvince = "KWA_ZULU_NATAL";
+                        //         break;
+
+                        //     case 'LP':
+                        //         customerProvince = "LIMPOPO";
+                        //         break;
+
+                        //     case 'MP':
+                        //         customerProvince = "MPUMALANGA";
+                        //         break;
+
+                        //     case 'NC':
+                        //         customerProvince = "NORTHERN_CAPE";
+                        //         break;
+
+                        //     case 'NW':
+                        //         customerProvince = "NORTHERN_WEST";
+                        //         break;
+
+                        //     case 'WC':
+                        //         customerProvince = "WESTERN_CAPE";
+                        //         break;
+                        // }
+
+                        cartInformation.data.items.filter((item) => {
+                            if (item.weight !== 0) {
+                                parcelDims = new Array({
+                                    "parcel_length": 0,
+                                    "parcel_breadth": 0,
+                                    "parcel_height": 0,
+                                    "parcel_mass": item.weight
+                                });
+                            }
+                        });
+
+                        customerCompanyName = (cartInformation.data.shippingPerson.companyName ? cartInformation.data.shippingPerson.companyName : 'Null');
+                        customerStreet = (cartInformation.data.shippingPerson.street ? cartInformation.data.shippingPerson.street : cartInformation.data.billingPerson.street);
+                        customerCity = (cartInformation.data.shippingPerson.city ? cartInformation.data.shippingPerson.city : cartInformation.data.billingPerson.city);
+                        customerPostalCode = (cartInformation.data.shippingPerson.postalCode ? cartInformation.data.shippingPerson.postalCode : cartInformation.data.billingPerson.postalCode);
+                        customerLastName = (cartInformation.data.shippingPerson.lastName ? cartInformation.data.shippingPerson.lastName : cartInformation.data.billingPerson.lastName);
+                        customerFirstName = (cartInformation.data.shippingPerson.firstName ? cartInformation.data.shippingPerson.firstName : cartInformation.data.billingPerson.firstName);
+                        customerPhoneNumber = (cartInformation.data.shippingPerson.phone ? cartInformation.data.shippingPerson.phone : cartInformation.data.billingPerson.phone);
+                        customerFullName = (cartInformation.data.shippingPerson.name ? cartInformation.data.shippingPerson.name : cartInformation.data.billingPerson.name);
+                        customerEmail = cartInformation.data.email;
+
+                        if (ecwidPickUpPostalCode)
+                            companyPickUpSuburbCall = await getCorrectSuburbName(ecwidPickUpPostalCode);
+
+                        if (customerPostalCode)
+                            customerDropOffSuburbCall = await getCorrectSuburbName(customerPostalCode);
+
+                        companyPickUpSuburb = companyPickUpSuburbCall.data.suburb;
+                        customerDropOffSuburb = customerDropOffSuburbCall.data.suburb;
+
+                        postBookingObject = {
+                            "serviceId": DROPPA_SERVICE_ID,
+                            "platform": "Ecwid",
+                            "pickUpPCode": ecwidPickUpPostalCode,
+                            "dropOffPCode": customerPostalCode,
+                            "fromSuburb": companyPickUpSuburb,
+                            "toSuburb": customerDropOffSuburb,
+                            "province": companyProvince ? companyProvince : 'Null',
+                            "destinationProvince": customerProvince ? customerProvince : 'Null',
+                            "pickUpAddress": `${companyStreetAddress}, ${companyPickUpSuburb}, ${ecwidPickUpPostalCode}`,
+                            "pickUpCompanyName": (ecwidProfileCompanyName ? ecwidProfileCompanyName : ""),
+                            "customerName": customerFirstName,
+                            "customerSurname": customerLastName,
+                            "customerPhone": customerPhoneNumber,
+                            "customerEmail": customerEmail,
+                            "price": cartInformation.data.shippingOption.shippingRate,
+                            "dropOffAddress": `${customerStreet}, ${customerDropOffSuburb}, ${customerPostalCode}`,
+                            "dropOffCompanyName": (customerCompanyName ? customerCompanyName : ""),
+                            "pickUpUnitNo": "",
+                            "dropOffUnitNo": "",
+                            "parcelDimensions": parcelDims,
+                            "instructions": (cartInformation.data.orderComments ? cartInformation.data.orderComments : 'Default Ecommerce widget Instructions'),
+                            "shopify_orderNo": globalOrderId,
+                            "storeName": `${ecwidProfileStoreName}.site`,
+                        }
+
+                        const ecwirdOrderId = await EcwidOrders.findOne({}).where('ecwid_order_id').equals(globalOrderId).exec();
+
+                        if (ecwirdOrderId !== null) return res.sendStatus(400);
+
+                        createDroppaBookings = await droppa_post_booking(postBookingObject);
+
+                        let neworder_indb = new EcwidOrders({
+                            serviceId: process.env.DROPPA_SERVICE_ID,
+                            droppa_booking_oid: createDroppaBookings.data.oid,
+                            droppa_tracknumber: createDroppaBookings.data.trackNo,
+                            droppa_booking_type: createDroppaBookings.data.type,
+                            ecwid_order_id: globalOrderId
+                        });
+
+                        if (createDroppaBookings.status === 200) {
+                            EcwidOrderObjectId = createDroppaBookings.data.oid;
+
+                            await EcwidOrders.create(neworder_indb);
+                        }
+
+                        return res.sendStatus(200);
+                    }
+                    return res.sendStatus(200);
+                }
+
+                if (eventType === "order.created") {
+                    try {
+                        if ((cardDetails.newPaymentStatus === "PAID") || (cardDetails.oldPaymentStatus === "PAID")) {
+                            makePaymentForCurrentBooking = await droppa_post_payment(EcwidOrderObjectId);
+
+                            console.log(makePaymentForCurrentBooking)
+
+                            if (makePaymentForCurrentBooking.data.oid) {
+                                return res.sendStatus(200);
+                            }
+                        }
+                    } catch (error) {
+                        console.log({ "Payment Gateway Error": error })
+                        return res.sendStatus(200);
+                    }
+                }
+
+                if (eventType === "order.deleted") {
+                    console.log("Order Cancelled");
+                    return res.sendStatus(200);
+                }
+
+                if (eventType === "unfinished_order.deleted") {
+                    console.log("Unfinished Order Cancelled");
+                    return res.sendStatus(200);
+                }
+            }
+
+        } catch (error) {
+            console.log({ "Booking Gateway Error": error })
+            return res.status(200).send(error);
+        }
+
+        return res.sendStatus(200);
     // });
 
 });
