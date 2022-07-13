@@ -147,11 +147,6 @@ app.post('/', async (req, res) => {
     }
 });
 
-app.post('/webhook?eventtype=unfinished_order.updated', async (req, res)=>{
-   console.log("request====================================", req);
-   console.log("response====================================", res);
-})
-
 app.post('/webhook', async (req, res) => {
 
     let { eventType, eventCreated, eventId, storeId } = req.body;
@@ -406,6 +401,7 @@ app.post('/webhook', async (req, res) => {
                             "storeName": `${ecwidProfileStoreName}.site`,
                         }
 
+                        console.log("==================================booking data", postBookingObject)
                         // const ecwirdOrderId = await EcwidOrders.findOne({}).where('ecwid_order_id').equals(globalOrderId).exec();
 
                         if (globalOrderId !== null) return res.sendStatus(400);
