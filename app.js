@@ -10,11 +10,7 @@ const crypto = require('crypto');
 const colors = require('colors');
 const axios = require('axios');
 const fs = require('fs');
-const ecwid = require('ecwid-api')("", 'secret_HsKDT1jrxwNqRvYBJYRnJdV1LtYsZGyc');
-
-// const ecwidSDK = require("./ecwidSdk");
-// const ecwidScript = require("./ecwidScript");
-// const ecwidCloud = require("./cloudfront");
+const ecwid = require('ecwid-api')(69173761, 'secret_HsKDT1jrxwNqRvYBJYRnJdV1LtYsZGyc');
 
 const { NODE_ENV, DROPPA_SERVICE_ID } = process.env;
 const webhookInstallationPath = "./application_installed.json";
