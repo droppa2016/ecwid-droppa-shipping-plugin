@@ -12,6 +12,10 @@ const axios = require('axios');
 const fs = require('fs');
 const ecwid = require('ecwid-api')(69173761, 'secret_HsKDT1jrxwNqRvYBJYRnJdV1LtYsZGyc');
 
+const ecwidSDK = require("./ecwidSdk");
+// const ecwidScript = require("./ecwidScript");
+// const ecwidCloud = require("./cloudfront");
+
 const { NODE_ENV, DROPPA_SERVICE_ID } = process.env;
 const webhookInstallationPath = "./application_installed.json";
 const userSavedKeys = "./application_saved_keys.json";
@@ -48,6 +52,14 @@ app.use(express.json());
 app.set('json spaces', 2);
 /* Mongoose URI Connection */
 mongodb_connection._connection();
+
+////
+EcwidApp.init({
+    app_id: "droppa-dev",
+    autoloadedflag: true,
+    autoheight: true
+});
+
 /**
  * @description     - Cross Site Middleware
  */
@@ -80,6 +92,14 @@ app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "public", "ifram
  */
 
 app.post('/', async (req, res) => {
+
+    EcwidApp.init({
+        app_id: "droppa-dev",
+        autoloadedflag: true,
+        autoheight: true
+    });
+
+
 
     ecwid.getStoreProfile()
         .then(data => {console.log('Store profile data: ', data)})
