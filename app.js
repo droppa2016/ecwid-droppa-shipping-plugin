@@ -294,6 +294,7 @@ app.post('/webhook', async (req, res) => {
 
         if (eventType === "order.updated"){
             console.log("EcwidOrderObjectId===========", EcwidOrderObjectId);
+            console.log("this is the request body=========", req.body);
         }
 
         try {
