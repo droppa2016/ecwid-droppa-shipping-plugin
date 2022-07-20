@@ -53,13 +53,6 @@ app.set('json spaces', 2);
 /* Mongoose URI Connection */
 mongodb_connection._connection();
 
-////
-// ecwidSDK.init({
-//     app_id: "droppa-dev",
-//     autoloadedflag: true,
-//     autoheight: true
-// });
-
 /**
  * @description     - Cross Site Middleware
  */
