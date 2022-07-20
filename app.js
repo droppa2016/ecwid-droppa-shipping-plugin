@@ -86,6 +86,11 @@ app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "public", "ifram
 
 app.post('/', async (req, res) => {
 
+    ///where the app starts
+    console.log("======LOADING.........>>>>>>>>>>>>>>>>>>>");
+
+    console.log("request......=====", req);
+    console.log("response......=====", res);
     // EcwidApp.init({
     //     app_id: "droppa-dev",
     //     autoloadedflag: true,
@@ -156,6 +161,7 @@ app.post('/', async (req, res) => {
 
 app.post('/webhook', async (req, res) => {
 
+    //GET STORAGE
     ecwid.getAllStorage()
     .then((data) => { 
 
