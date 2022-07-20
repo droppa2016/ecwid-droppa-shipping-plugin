@@ -285,7 +285,7 @@ app.post('/webhook', async (req, res) => {
         }
 
         if (eventType === "unfinished_order.created") {
-            globalOrderId = req.body.data.orderId;
+            globalOrderId = req.body.entityId;
             globalCartId = cardDetails.cartId;
             console.log(globalCartId === cardDetails.cartId, globalCartId, cardDetails.cartId);
             console.log(globalOrderId === cardDetails.orderId, globalOrderId, cardDetails.orderId);
