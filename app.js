@@ -93,13 +93,11 @@ app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "public", "ifram
 
 app.post('/', async (req, res) => {
 
-    EcwidApp.init({
-        app_id: "droppa-dev",
-        autoloadedflag: true,
-        autoheight: true
-    });
-
-
+    // EcwidApp.init({
+    //     app_id: "droppa-dev",
+    //     autoloadedflag: true,
+    //     autoheight: true
+    // });
 
     ecwid.getStoreProfile()
         .then(data => {console.log('Store profile data: ', data)})
@@ -473,7 +471,7 @@ app.post('/webhook', async (req, res) => {
                 if (eventType === "order.updated"){
                     console.log("inside this service");
                 }
-                
+
             }
 
         } catch (error) {
