@@ -297,6 +297,8 @@ app.post('/webhook', async (req, res) => {
             console.log("this is the request body=========", req.body);
         }
 
+        console.log("this is the request body=========", req.body);
+
         try {
             cartInformation = await getCurrentCartDetails(storeId, globalCartId, private_key);
 
