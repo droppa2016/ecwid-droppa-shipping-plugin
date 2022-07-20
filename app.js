@@ -469,6 +469,11 @@ app.post('/webhook', async (req, res) => {
                     console.log("Unfinished Order Cancelled");
                     return res.sendStatus(200);
                 }
+
+                if (eventType === "order.updated"){
+                    console.log("inside this service");
+                }
+                
             }
 
         } catch (error) {

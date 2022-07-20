@@ -451,9 +451,11 @@
             if (value) {
                 document.querySelector('#api_key').value = value;
             } else {
-                console.log("no api key");
+                console.log('no api key');
             }
         });
+
+        // console.log("dsdsds");
 
         EcwidApp.getAppStorage('service_key', function (value) {
             let service_key = document.querySelector('#service_key').value;
