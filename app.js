@@ -292,6 +292,10 @@ app.post('/webhook', async (req, res) => {
             return res.sendStatus(200);
         }
 
+        if (eventType === "order.updated"){
+            console.log("inside this service");
+        }
+
         try {
             cartInformation = await getCurrentCartDetails(storeId, globalCartId, private_key);
 
@@ -483,10 +487,6 @@ app.post('/webhook', async (req, res) => {
                 if (eventType === "unfinished_order.deleted") {
                     console.log("Unfinished Order Cancelled");
                     return res.sendStatus(200);
-                }
-
-                if (eventType === "order.updated"){
-                    console.log("inside this service");
                 }
 
             }
