@@ -293,7 +293,7 @@ app.post('/webhook', async (req, res) => {
         }
 
         if (eventType === "order.updated"){
-            console.log("inside this service");
+            console.log("EcwidOrderObjectId===========", EcwidOrderObjectId);
         }
 
         try {
