@@ -12,7 +12,7 @@ const axios = require('axios');
 const fs = require('fs');
 const ecwid = require('ecwid-api')(69173761, 'secret_HsKDT1jrxwNqRvYBJYRnJdV1LtYsZGyc');
 
-const ecwidSDK = require("./ecwidSdk");
+// const ecwidSDK = require("./ecwidSdk");
 // const ecwidScript = require("./ecwidScript");
 // const ecwidCloud = require("./cloudfront");
 
