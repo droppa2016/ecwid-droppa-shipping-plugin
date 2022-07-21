@@ -106,8 +106,8 @@ app.post('/', async (req, res) => {
     if (!req.body.id && req.body.id === 'undefined') return false;
 
     baseWeight = req.body.cart.weight
-    getrates = await droppa_get_quote_new_rates(res, baseWeight);
-    
+    let getrates = await droppa_get_quote_new_rates(res, baseWeight);
+console.log("======= rates===", getrates);
     try {
         generateQuote = await droppa_get_quote(res, baseWeight);
         basePrice = generateQuote.data.price;
