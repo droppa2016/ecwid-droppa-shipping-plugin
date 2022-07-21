@@ -90,41 +90,12 @@ app.post('/', async (req, res) => {
     ///where the app starts
     console.log("======LOADING.........>>>>>>>>>>>>>>>>>>>");
     console.log("response......=====", req.body);
-
-    ecwid.getStoreProfile()
-        .then(data => { console.log('Store profile data: ', data) })
-        .catch(err => console.log('Error: ', err));
-
-    ecwid.getStorage('api_key')
-        .then(data => {
-            console.log('api_key===========: ', data)
-        })
-        .catch(err => console.log('Error: ', err));
-
-    ecwid.getAllStorage()
-        .then((data) => {
-
-            var userData = [];
-            var setData = {};
-
-            data.forEach(element => {
-                if (element.key == "service_key" || element.key == "api_key" || element.key == "store_Id" || element.key == "private_key" || element.key == "public_key") {
-                    setData[element.key] = element.value;
-                    userData.push(setData)
-                }
-            });
-
-            // console.log('userdata===========: ', userData)
-            const storageData = userData[0];
-            console.log('storage data is ===========: ', storageData)
-            serviceId = storageData.service_key;
-            api_key = storageData.api_key;
-            storeId = storageData.store_Id;
-            private_key = storageData.private_key;
-            public_key = storageData.public_key;
-        })
-        .catch(err => console.log('Error: ============= ', err));
-
+    let storageData = req.body;
+    serviceId = storageData.merchantAppSettings.service_key;
+    api_key = storageData.merchantAppSettings.api_key;
+    storeId = storageData.storeId;
+    private_key = storageData.merchantAppSettings.private_key;
+    public_key = storageData.merchantAppSettings.public_key;
 
     let { shippingOptionsArray, generateQuote, baseWeight, basePrice } = '';
 
