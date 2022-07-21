@@ -79,7 +79,7 @@ if (NODE_ENV === 'production') {
  */
 
 app.get('*', (req, res) => {
-    console.log("================ request from loading the plugin, ", req.body);
+    console.log("================ request from loading the plugin, ", req);
     res.sendFile(path.resolve(__dirname, "public", "iframe.html"))
 });
 
