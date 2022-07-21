@@ -107,7 +107,9 @@ app.post('/', async (req, res) => {
 
     baseWeight = req.body.cart.weight
     let getrates = await droppa_get_quote_new_rates(res, baseWeight);
-console.log("======= rates===", getrates);
+    
+    console.log("======= rates===", getrates);
+
     try {
         generateQuote = await droppa_get_quote(res, baseWeight);
         basePrice = generateQuote.data.price;
@@ -267,11 +269,11 @@ app.post('/webhook', async (req, res) => {
     }
 
     if (eventType === "order.updated") {
-       
-       let orderUpdateData = req.body;
-       let bookingID = orderUpdateData.entityId;
 
-       console.log("========================", orderUpdateData);
+        let orderUpdateData = req.body;
+        let bookingID = orderUpdateData.entityId;
+
+        console.log("========================", orderUpdateData);
 
         if (orderUpdateData.data.newFulfillmentStatus === "SHIPPED") {
             try {
