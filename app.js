@@ -89,7 +89,7 @@ app.post('/', async (req, res) => {
 
     ///where the app starts
     console.log("======LOADING.........>>>>>>>>>>>>>>>>>>>");
-    console.log("response......=====", req);
+    console.log("response......=====", req.body);
 
     ecwid.getStoreProfile()
         .then(data => { console.log('Store profile data: ', data) })
