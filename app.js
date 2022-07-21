@@ -78,7 +78,10 @@ if (NODE_ENV === 'production') {
  * @description     - Access Public Directory To View The iframe Html File
  */
 
-app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "public", "iframe.html")));
+app.get('*', (req, res) => {
+    console.log("================ request from loading the plugin, ", req.body);
+    res.sendFile(path.resolve(__dirname, "public", "iframe.html"))
+});
 
 /**
  * @description     - Send Post Request To GET Ecwid Shipping Response
