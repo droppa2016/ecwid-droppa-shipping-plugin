@@ -91,7 +91,7 @@ app.post('/', async (req, res) => {
     console.log("======LOADING.........>>>>>>>>>>>>>>>>>>>");
     // console.log("request......=====", req);
     console.log("response......=====", res.body);
-
+    console.log("Store ID......=====", res.body.storeId);
     ecwid.getStoreProfile()
         .then(data => { console.log('Store profile data: ', data) })
         .catch(err => console.log('Error: ', err));
