@@ -77,6 +77,46 @@ async function droppa_get_quote(res, weight) {
         .catch(error => console.log(error))
 };
 
+async function droppa_get_quote_new_rates(res, weight) {
+
+    let rateBodyObject = { mass: weight, dimensions: new Array() }
+
+    rateBodyObject.mass = weight;
+
+    data = {
+        mass: 30,
+        platform: 'ECWID',
+        distance: 0,
+        InsuranceAmount: 0,
+        fromSuburb: 'HIGHVELD',
+        toSuburb: 'CENTURION',
+        pickUpProvince: 'GAUTENG',
+        dropOffProvince: 'GAUTENG',
+        pickUpAddress: '8 Bauhinia Street, Highveld Technopark',
+        dropOffAddress: '13 Thami Mnyele Drive',
+        pickUpPCode: '0169',
+        dropOffPCode: '0157',
+        parcelDimensions: [
+          {
+            parcel_length: 0,
+            parcel_breadth: 0,
+            parcel_height: 0,
+            parcel_mass: 30
+          }
+        ]
+    }
+
+    return await postData(process.env.DROPPA_MASS_PRICES_SKYNET, data)
+        .then(jsonOutput => {
+            return jsonOutput
+        })
+        .catch(error => console.log(error))
+};
+
+
+
+
+
 
 /**
  * Get suburbs based on the postal code
@@ -174,5 +214,6 @@ module.exports = {
     getCurrentOrderDetails,
     getCorrectSuburbName,
     droppa_post_payment,
-    postReadyForShipment
+    postReadyForShipment,
+    droppa_get_quote_new_rates
 }
