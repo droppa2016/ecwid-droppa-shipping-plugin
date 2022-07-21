@@ -89,9 +89,8 @@ app.post('/', async (req, res) => {
 
     ///where the app starts
     console.log("======LOADING.........>>>>>>>>>>>>>>>>>>>");
-    // console.log("request......=====", req);
-    console.log("response......=====", res);
-    console.log("Store ID......=====", res.body.storeId);
+    console.log("response......=====", req);
+
     ecwid.getStoreProfile()
         .then(data => { console.log('Store profile data: ', data) })
         .catch(err => console.log('Error: ', err));
@@ -151,6 +150,7 @@ app.post('/', async (req, res) => {
     } catch (error) {
         return res.status(500).json({ error });
     }
+
 });
 
 app.post('/webhook', async (req, res) => {
