@@ -88,14 +88,8 @@ app.post('/', async (req, res) => {
 
     ///where the app starts
     console.log("======LOADING.........>>>>>>>>>>>>>>>>>>>");
-
     console.log("request......=====", req);
     console.log("response......=====", res);
-    // EcwidApp.init({
-    //     app_id: "droppa-dev",
-    //     autoloadedflag: true,
-    //     autoheight: true
-    // });
 
     ecwid.getStoreProfile()
         .then(data => {console.log('Store profile data: ', data)})
@@ -106,7 +100,6 @@ app.post('/', async (req, res) => {
         console.log('api_key===========: ', data)
     })
     .catch(err => console.log('Error: ', err));
-
 
     ecwid.getAllStorage()
         .then((data) => { 
@@ -293,14 +286,24 @@ app.post('/webhook', async (req, res) => {
         if (eventType === "unfinished_order.created") {
             globalOrderId = req.body.entityId;
             globalCartId = cardDetails.cartId;
-            console.log(globalCartId === cardDetails.cartId, globalCartId, cardDetails.cartId);
-            console.log(globalOrderId === cardDetails.orderId, globalOrderId, cardDetails.orderId);
             return res.sendStatus(200);
         }
 
         if (eventType === "order.updated"){
-            console.log("EcwidOrderObjectId===========", EcwidOrderObjectId);
-            console.log("this is the request body=========", req.body);
+
+            // if (req.body.data.oldFulfillmentStatus === "AWAITING_PROCESSING" && req.body.data.newFulfillmentStatus !== "AWAITING_PROCESSING"){
+                 
+            // }
+            globalOrderId = req.body.entityId;
+            bookingInfo = await postReadyForShipment(globalOrderId);
+            console.log("booking info===========================", bookingInfo);
+            //PROCESSING
+            //SHIPPED
+            //DELIVERED
+            //WILL_NOT_DELIVER
+            //RETURNED
+            //READY_FOR_PICKUP
+            //OUT_FOR_DELIVERY
         }
 
         console.log("this is the request body=========", req.body);

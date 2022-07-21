@@ -76,6 +76,8 @@ async function droppa_get_quote(res, weight) {
         })
         .catch(error => console.log(error))
 };
+
+
 /**
  * Get suburbs based on the postal code
  * @param {*} postalCode 
@@ -95,6 +97,20 @@ async function getCorrectSuburbName(postalCode) {
 async function droppa_post_booking(bookingBody) {
     console.log("============inside post service");
     return await postData(process.env.DROPPA_BOOKING, bookingBody)
+        .then(jsonOutput => {
+            console.log("============success data post service", jsonOutput);
+            return jsonOutput;
+        })
+        .catch(error => console.log("============Error data post service",error));
+}
+
+/**
+ * @description - Create bookings based on the object body given
+ * @param {ready booking for shippment create waybill} bookingId
+ */
+ async function postReadyForShipment(bookingId) {
+    console.log("============inside post service");
+    return await postData(`${process.env.DROPPA_BOOKING_SHIPMENT}${bookingId}`)
         .then(jsonOutput => {
             console.log("============success data post service", jsonOutput);
             return jsonOutput;
