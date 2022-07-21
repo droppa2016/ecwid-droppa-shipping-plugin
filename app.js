@@ -265,8 +265,11 @@ app.post('/webhook', async (req, res) => {
     }
 
     if (eventType === "order.updated") {
-        orderUpdateData = req.body;
-        bookingID = orderUpdateData.entityId;
+       
+       let orderUpdateData = req.body;
+       let bookingID = orderUpdateData.entityId;
+
+       console.log("========================", orderUpdateData);
 
         if (orderUpdateData.data.newFulfillmentStatus === "SHIPPED") {
             try {
