@@ -173,5 +173,6 @@ module.exports = {
     getCurrentCartDetails,
     getCurrentOrderDetails,
     getCorrectSuburbName,
-    droppa_post_payment
+    droppa_post_payment,
+    postReadyForShipment
 }
