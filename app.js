@@ -27,7 +27,8 @@ const {
     getCurrentCartDetails,
     getCurrentOrderDetails,
     getCorrectSuburbName,
-    droppa_post_payment
+    droppa_post_payment,
+    postReadyForShipment
 } = require('./controller/ecwidController');
 
 const EcwidOrders = require('./model/EcwidOrders');
