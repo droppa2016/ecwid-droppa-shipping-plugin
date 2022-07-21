@@ -107,7 +107,7 @@ app.post('/', async (req, res) => {
 
     baseWeight = req.body.cart.weight
     let getrates = await droppa_get_quote_new_rates(res, baseWeight);
-    
+
     console.log("======= rates===", getrates);
 
     try {
@@ -115,6 +115,11 @@ app.post('/', async (req, res) => {
         basePrice = generateQuote.data.price;
 
         shippingOptionsArray = new Array({
+            title: "Droppa Shipping (1 - 3 days)",
+            rate: (basePrice ? basePrice : 0.00),
+            transitDays: "1-3",
+            descriptions: "Courier Express"
+        }, {
             title: "Droppa Shipping (1 - 3 days)",
             rate: (basePrice ? basePrice : 0.00),
             transitDays: "1-3",
