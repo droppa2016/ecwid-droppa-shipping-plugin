@@ -119,12 +119,12 @@ app.post('/', async (req, res) => {
         basePrice = generateQuote.data.price;
 
         shippingOptionsArray = new Array({
-            title: "Droppa Shipping (1 - 3 days)",
+            title: "Express courier (1 - 3 days)",
             rate: (basePrice ? basePrice : 0.00),
             transitDays: "1-3",
             descriptions: "Courier Express"
         }, {
-            title: "Droppa Shipping (1 - 3 days)",
+            title: "Budget courier (2 - 5 days)",
             rate: (basePrice ? basePrice : 0.00),
             transitDays: "1-3",
             descriptions: "Courier Express"
@@ -286,7 +286,7 @@ app.post('/webhook', async (req, res) => {
 
         if (orderUpdateData.data.newFulfillmentStatus === "SHIPPED") {
             try {
-                bookingInfo = await postReadyForShipment(bookingID);
+                let bookingInfo = await postReadyForShipment(bookingID);
                 console.log("booking info===========================", bookingInfo);
                 return res.sendStatus(200);
             } catch (error) {

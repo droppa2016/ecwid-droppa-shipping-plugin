@@ -85,24 +85,24 @@ async function droppa_get_quote_new_rates(res, weight) {
 
     console.log("=========res body inside cart......", res.body);
     let data = {
-        mass: 30,
+        mass: rateBodyObject.mass,
         platform: 'ECWID',
         distance: 0,
         InsuranceAmount: 0,
-        fromSuburb: res.body.cart.shippingAddress.city,
-        toSuburb: 'CENTURION',
-        pickUpProvince: 'GAUTENG',
-        dropOffProvince: 'GAUTENG',
-        pickUpAddress: '8 Bauhinia Street, Highveld Technopark',
-        dropOffAddress: '13 Thami Mnyele Drive',
-        pickUpPCode: '0169',
-        dropOffPCode: '0157',
+        fromSuburb: res.body.cart.originAddress.city,
+        toSuburb: res.body.cart.shippingAddress.city,
+        pickUpProvince: setProvince(res.body.cart.originAddress.stateOrProvinceCode),
+        dropOffProvince: setProvince(res.body.cart.shippingAddress.stateOrProvinceCode),
+        pickUpAddress: res.body.cart.originAddress.street,
+        dropOffAddress: res.body.cart.shippingAddress.street,
+        pickUpPCode: res.body.cart.originAddress.postalCode,
+        dropOffPCode: res.body.cart.shippingAddress.postalCode,
         parcelDimensions: [
           {
             parcel_length: 0,
             parcel_breadth: 0,
             parcel_height: 0,
-            parcel_mass: 30
+            parcel_mass: rateBodyObject.mass
           }
         ]
     }
@@ -169,6 +169,30 @@ async function droppa_post_payment(bookingObjectId) {
             return jsonOutput;
         })
         .catch(error => console.log(error));
+}
+
+function setProvince(province){
+    switch (storeInformation.data.company.stateOrProvinceCode) {
+        case 'EC':
+           return companyProvince = "EASTERN_CAPE";
+        case 'FS':
+            return companyProvince = "FREE_STATE";
+        case 'GP':
+            return   companyProvince = "GAUTENG";
+        case 'KZN':
+            return  companyProvince = "KWA_ZULU_NATAL";
+        case 'LP':
+            return  companyProvince = "LIMPOPO";
+        case 'MP':
+            return  companyProvince = "MPUMALANGA";
+        case 'NC':
+            return companyProvince = "NORTHERN_CAPE";
+        case 'NW':
+            return companyProvince = "NORTHERN_WEST";
+        case 'WC':
+            return   companyProvince = "WESTERN_CAPE";
+
+    }
 }
 
 async function postData(url = '', data = {}) {
