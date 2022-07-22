@@ -83,12 +83,12 @@ async function droppa_get_quote_new_rates(res, weight) {
 
     rateBodyObject.mass = weight;
 
-    data = {
+    let data = {
         mass: 30,
         platform: 'ECWID',
         distance: 0,
         InsuranceAmount: 0,
-        fromSuburb: 'HIGHVELD',
+        fromSuburb: res.body.cart.shippingAddress.city,
         toSuburb: 'CENTURION',
         pickUpProvince: 'GAUTENG',
         dropOffProvince: 'GAUTENG',
