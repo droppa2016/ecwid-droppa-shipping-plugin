@@ -113,6 +113,8 @@ app.post('/', async (req, res) => {
     let getrates = await droppa_get_quote_new_rates(req, baseWeight);
 
     console.log("======= rates===", getrates);
+    let expressBudgetAmt =  getrates.data.expressBudgetAmt;
+    let expressCourier = getrates.data.expressCourier;
 
     try {
         generateQuote = await droppa_get_quote(res, baseWeight);
@@ -120,12 +122,12 @@ app.post('/', async (req, res) => {
 
         shippingOptionsArray = new Array({
             title: "Express courier (1 - 3 days)",
-            rate: (basePrice ? basePrice : 0.00),
+            rate: (expressCourier ? expressCourier : 0.00),
             transitDays: "1-3",
             descriptions: "Courier Express"
         }, {
             title: "Budget courier (2 - 5 days)",
-            rate: (basePrice ? basePrice : 0.00),
+            rate: (expressBudgetAmt ? expressBudgetAmt : 0.00),
             transitDays: "1-3",
             descriptions: "Courier Express"
         });
