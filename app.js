@@ -105,6 +105,11 @@ app.post('/', async (req, res) => {
 
     if (!req.body.id && req.body.id === 'undefined') return false;
 
+
+    if (storageData.cart){
+        console.log("theres cart data");
+        
+    }
     baseWeight = req.body.cart.weight
     let getrates = await droppa_get_quote_new_rates(res, baseWeight);
 
