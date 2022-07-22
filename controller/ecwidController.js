@@ -107,6 +107,8 @@ async function droppa_get_quote_new_rates(res, weight) {
         ]
     }
 
+    console.log("formated booking address......", data);
+
     return await postData(process.env.DROPPA_MASS_PRICES_SKYNET, data)
         .then(jsonOutput => {
             return jsonOutput
