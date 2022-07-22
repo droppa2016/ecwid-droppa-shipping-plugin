@@ -83,6 +83,7 @@ async function droppa_get_quote_new_rates(res, weight) {
 
     rateBodyObject.mass = weight;
 
+    console.log("=========res body inside cart......", res.body);
     let data = {
         mass: 30,
         platform: 'ECWID',
