@@ -174,7 +174,7 @@ async function droppa_post_payment(bookingObjectId) {
 }
 
 function setProvince(province){
-    switch (storeInformation.data.company.stateOrProvinceCode) {
+    switch (province) {
         case 'EC':
            return companyProvince = "EASTERN_CAPE";
         case 'FS':
