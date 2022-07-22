@@ -108,10 +108,9 @@ app.post('/', async (req, res) => {
 
     if (storageData.cart){
         console.log("theres cart data");
-        
     }
     baseWeight = req.body.cart.weight
-    let getrates = await droppa_get_quote_new_rates(res, baseWeight);
+    let getrates = await droppa_get_quote_new_rates(req, baseWeight);
 
     console.log("======= rates===", getrates);
 
